@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyActivityTest</string>
+    <string name="my_broadcast">Send Broadcast</string>
 </resources>
