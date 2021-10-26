@@ -1,5 +1,7 @@
 package com.example.myactivitytest;
 
+import static com.example.myactivitytest.ActionUtils.BROADCAST_RECEIVER;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -11,6 +13,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -39,7 +42,15 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        initBroadcast();
 //        initCall();
+    }
+
+    private void initBroadcast() {
+        MyBroadcastReceiver myBroadcastReceiver = new MyBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BROADCAST_RECEIVER);
+        registerReceiver(myBroadcastReceiver, filter);
     }
 
     private void initView() {
@@ -53,6 +64,12 @@ public class MainActivity extends Activity {
                 sendBroadcast(intent);
             }
         });
+    }
+
+    public void sendBroadcast(View view) {
+        Intent intent = new Intent();
+        intent.setAction(BROADCAST_RECEIVER);
+        sendBroadcast(intent);
     }
 
     private void initCall() {
@@ -82,4 +99,6 @@ public class MainActivity extends Activity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
     }
+
+
 }
